@@ -50,14 +50,19 @@ pip install -r requirements.txt
 
 ## 使用方法
 
-1. 在 `main.py` 中設置目標用戶名：
-```python
-username = "你想要爬取的用戶名"
+運行程序並指定要爬取的用戶名：
+```bash
+python main.py -u <用戶名>
 ```
 
-2. 運行程序：
+例如：
 ```bash
-python main.py
+python main.py -u ray.realms
+```
+
+您也可以使用完整的參數名：
+```bash
+python main.py --username ray.realms
 ```
 
 ## 輸出格式

@@ -1,6 +1,7 @@
 import os
 import json
 import asyncio
+import argparse
 from datetime import datetime
 from scarch_html import main as fetch_html
 from scarch_parser import parse_threads_posts, read_html_file
@@ -59,12 +60,25 @@ async def process_user_threads(username):
         print(f"Error processing threads: {str(e)}")
         return False
 
+def parse_arguments():
+    """
+    解析命令行參數
+    """
+    parser = argparse.ArgumentParser(description='Threads 帖文爬蟲工具')
+    parser.add_argument('-u', '--username', 
+                      type=str, 
+                      required=True,
+                      help='要爬取的 Threads 用戶名')
+    return parser.parse_args()
+
 async def main():
     """
     主程式進入點
     """
     try:
-        username = "ray.realms"  # 測試用戶名
+        args = parse_arguments()
+        username = args.username
+        
         if not username:
             print("Username cannot be empty")
             return
