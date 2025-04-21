@@ -3,6 +3,44 @@ from bs4 import BeautifulSoup
 import json
 from datetime import datetime
 
+def convert_to_number(value_str):
+    """
+    將帶單位的數字字符串轉換為實際數值
+    例如：'1.6K' -> 1600, '1M' -> 1000000
+    """
+    if not value_str or value_str.strip() == '':
+        return 0
+        
+    value_str = value_str.strip().upper()
+    try:
+        # 如果是純數字
+        return int(value_str)
+    except ValueError:
+        try:
+            # 處理帶單位的數字
+            multipliers = {
+                'K': 1000,
+                'M': 1000000,
+                'B': 1000000000
+            }
+            
+            # 找到數字部分和單位部分
+            number = ''
+            unit = ''
+            for char in value_str:
+                if char.isdigit() or char == '.':
+                    number += char
+                else:
+                    unit = char
+                    break
+            
+            if unit in multipliers:
+                return int(float(number) * multipliers[unit])
+            else:
+                return 0
+        except:
+            return 0
+
 def extract_post_info(post_element):
     """
     從單個貼文元素中提取資訊
@@ -30,13 +68,13 @@ def extract_post_info(post_element):
     if interaction_stats:
         # 點讚數
         likes = interaction_stats[0].get_text()
-        interactions['likes'] = int(likes) if likes else 0
+        interactions['likes'] = convert_to_number(likes)
         # 評論數
         comments = interaction_stats[1].get_text() if len(interaction_stats) > 1 else '0'
-        interactions['comments'] = int(comments) if comments else 0
+        interactions['comments'] = convert_to_number(comments)
         # 分享數
         shares = interaction_stats[-1].get_text() if len(interaction_stats) > 2 else '0'
-        interactions['shares'] = int(shares) if shares else 0
+        interactions['shares'] = convert_to_number(shares)
     
     # 組合所有資訊
     post_data = {
