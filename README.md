@@ -31,9 +31,12 @@
 
 ## 環境要求
 
-- Python 3.7+
-- aiohttp 3.9.1
-- beautifulsoup4 4.12.2
+- Python 3.10
+- FastAPI 0.110.0
+- Playwright 1.42.0
+- BeautifulSoup4 4.12.2
+- Uvicorn 0.27.1
+- 其他依賴見 requirements.txt
 
 ## 安裝
 
@@ -43,10 +46,58 @@ git clone [你的倉庫URL]
 cd [倉庫名稱]
 ```
 
-2. 安裝依賴：
+2. 創建並激活虛擬環境：
+
+Windows:
 ```bash
-pip install -r requirements.txt
+# 創建虛擬環境
+python -m venv .venv
+
+# 激活虛擬環境
+.\.venv\Scripts\Activate.ps1  # PowerShell
+# 或
+.\.venv\Scripts\activate.bat  # CMD
 ```
+
+Linux/macOS:
+```bash
+# 創建虛擬環境
+python -m venv .venv
+
+# 激活虛擬環境
+source .venv/bin/activate
+```
+
+3. 安裝依賴：
+```bash
+# 安裝所有 Python 包
+pip install -r requirements.txt
+
+# 安裝 Playwright 瀏覽器
+playwright install
+```
+
+4. 如果安裝過程中遇到 greenlet 包的問題，可以嘗試：
+```bash
+# 安裝最新版本的 greenlet
+pip install greenlet==3.2.0
+```
+
+## 運行服務
+
+啟動 FastAPI 服務器：
+```bash
+# 開發模式（自動重載）
+python app.py
+
+# 或使用 uvicorn
+uvicorn app:app --reload --host 0.0.0.0 --port 8000
+```
+
+服務啟動後，可以通過以下地址訪問：
+- API 文檔：http://localhost:8000/docs
+- 交互式 API 文檔：http://localhost:8000/redoc
+- API 根路徑：http://localhost:8000/
 
 ## 使用方法
 

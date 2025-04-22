@@ -15,13 +15,14 @@ async def save_page_source(url, output_dir="output"):
     try:
         # 創建輸出目錄
         os.makedirs(output_dir, exist_ok=True)
-        
+        a = async_playwright()
+        print(a, '     oi8yhgorjiunjefrwovnuj')
         # 生成輸出文件名
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"page_source_{timestamp}.html"
         output_path = os.path.join(output_dir, filename)
-        
         async with async_playwright() as p:
+            print("sdwqfrgethyjufjthdrgef")
             # 啟動瀏覽器
             browser = await p.chromium.launch(headless=True)
             context = await browser.new_context()
@@ -48,9 +49,19 @@ async def save_page_source(url, output_dir="output"):
             await browser.close()
             
             return output_path
+        
+        print("sdwqfrgethyjufjthdrgef")
     except Exception as e:
         print(f"保存頁面源代碼時發生錯誤: {str(e)}")
         return None
+
+
+async def run(username):
+    """
+    主要執行函數
+    """
+    url = f'https://www.threads.net/@{username}'
+    return await save_page_source(url=url)
 
 async def main(username):
     """
